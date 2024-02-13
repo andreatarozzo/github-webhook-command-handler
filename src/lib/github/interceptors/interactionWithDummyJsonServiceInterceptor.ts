@@ -39,6 +39,4 @@ export const interactionWithDummyJsonServiceInterceptor: Interceptor = async (
     detailSectionBody: JSON.stringify(response.data, null, 2),
     footer: `That's it!`,
   });
-
-  // Posting the result
 };
