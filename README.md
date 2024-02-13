@@ -22,6 +22,8 @@ The example interceptors currently present are the following:
   - Acknowledge the command with a reaction attached to the comment containing the command.
   - Post a reply
 
+  ![ping-example](images/ping-example.png)
+
 <br>
 
 - **BREAKING CHANGES INTERCEPTOR** <br>
@@ -37,6 +39,8 @@ The example interceptors currently present are the following:
   - Run [optic](https://www.useoptic.com/) to check for breaking changes in the sample OAS file.
   - Post the result to the PR as comment failing the `CheckRun` if breaking changes are detected blocking the pr from being merged.
 
+  ![breaking-changes-example](images/breaking-changes-example.png)
+
 <br>
 
 - **INTERACTION WITH DUMMY JSON SERVICE INTERCEPTOR** <br>
@@ -47,11 +51,14 @@ The example interceptors currently present are the following:
   - Send a request to the [dummy json service](https://dummyjson.com/docs/todos).
   - Post the response of the service to the PR as comment.
 
+  ![dummy-json-service-example](images/dummy-json-service-example.png)
+
 <br>
 
 - **UPDATE COUNTER FILE INTERCEPTOR** <br>
   Command: `command update counter file` <br>
   Logic:
+
   - Acknowledge the command with a reaction attached to the comment containing the command.
   - Generate a temp directory that will be cleaned up at the end of the execution or if an error is thrown.
   - Fetch the required information about the PR.
@@ -63,6 +70,15 @@ The example interceptors currently present are the following:
   - Create the counter file if not preset, or, updates the current one if it exists.
   - Commit the changes.
   - Push the changes.
+
+  ![update-counter-example](images/update-counter-example.png)
+
+<br>
+
+- **GENERAL ERROR**: <br>
+  In case something goes wrong during the execution of an interceptor a message will be posted in the PR.
+
+  ![general-error-example](images/general-error-example.png)
 
 <br>
 
