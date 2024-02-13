@@ -105,7 +105,7 @@ The example interceptors currently present are the following:
    `https://api.github.com/users/<MY_GITHUB_APP_NAME>[bot]` <br>
    This will returns some information about the GitHub app ( even private ones ) including the GitHub App user id.
 
-7. Create an .env file with the following information <br>
+7. Create an `.env` file with the following information <br>
 
    ```
    PORT="..."
