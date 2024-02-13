@@ -104,6 +104,11 @@ The example interceptors currently present are the following:
    GH_APP_PRIVATE_KEY="..." ( the content of the .pem file )
    ```
 
+   The current `Dockerfile` includes a command to copy the `.env` file into the image.<br>
+   This is an ok approach for quick local development but it will create some security concern if the image is publicly available because the file will become part of the filesystem of the image's layers. <br>
+   Although you might delete the file from the last layer in the Dockerfile, the file would still exist in the previous layers, potentially exposing your secrets. <br>
+   If you plan to deploy this service through a CI/CD pipeline it is recommended to pass the required env variables at runtime using the `-e MY_ENV_VARIABLE=MY_VALUE` syntax alongside the `docker run` command.
+
 ### Dockerfile & Additional app/tools
 
 If you need to use other cli tools or other apps you can install them in the dockerfile as shown for the optic installation.
