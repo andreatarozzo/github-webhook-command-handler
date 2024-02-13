@@ -1,0 +1,42 @@
+{
+  "name": "github-webhook-command-handler",
+  "version": "0.0.1",
+  "description": "Node GitHub Webhook Command handler",
+  "main": "index.ts",
+  "repository": "git@github.com:andreatarozzo/node-blueprint.git",
+  "author": "Andrea Tarozzo <tarozzo.andrea@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node ./dist/index.js",
+    "serve": "nodemon ./src/index.ts",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "devDependencies": {
+    "@octokit/types": "^12.4.0",
+    "@octokit/webhooks-types": "^7.3.2",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.0",
+    "@types/uuid": "^9.0.8",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "prettier": "3.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@octokit/app": "^14.0.2",
+    "axios": "^1.6.7",
+    "bl": "^6.0.11",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "octokit": "^3.1.2",
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0"
+  }
+}

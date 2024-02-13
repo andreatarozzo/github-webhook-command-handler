@@ -1,0 +1,9 @@
+{
+  "arrowParens": "avoid",
+  "tabWidth": 2,
+  "semi": true,
+  "useTabs": false,
+  "printWidth": 120,
+  "singleQuote": true,
+  "endOfLine": "auto"
+}
