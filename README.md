@@ -82,7 +82,7 @@ The example interceptors currently present are the following:
 
 <br>
 
-## Setting up the necessary component for the project
+## Setting up the necessary dependencies for the project
 
 1. Created a GitHub App <br>
    Follow the official GitHub documentation [here](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/registering-a-github-app)
