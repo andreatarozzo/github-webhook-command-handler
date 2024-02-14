@@ -23,7 +23,7 @@ RUN sh -c "$(curl -Ls https://install.useoptic.com/install.sh)" -- "$OPTIC_VERSI
 # Copy production dependencies and the built code
 COPY package*.json ./
 RUN yarn install --production --frozen-lockfile && yarn cache clean 
-COPY --from=builder /home/node/app/dist ./dist
+COPY --from=builder /home/node/app/dist/src ./dist
 
 # This is ok for local testing, for a CI process through, for example, GitHub Actions, the file can be injected during the run
 # Alternatively env variables could be passed with the run command -> docker run -e MY_SECRET_KEY=MY_SECRET_VALUE
@@ -33,4 +33,4 @@ COPY ./.env ./.env
 EXPOSE 3000
 
 # Start the application
-CMD ["yarn", "start"]
+CMD ["node", "./dist/index.js"]
