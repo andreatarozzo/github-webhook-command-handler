@@ -4,7 +4,7 @@ import { Octokit } from '@octokit/rest';
 import { logger } from '../../../src/utils/logger';
 import { BreakingChangesError } from '../../../src/utils';
 
-dotenv.config({ path: '.env.test' });
+dotenv.config({ path: '.env.test.local' });
 
 jest.mock('../../../node_modules/@octokit/rest', () => ({
   Octokit: jest.fn().mockImplementation(() => ({
@@ -28,7 +28,8 @@ const mockChecksUpdateReturnValue = {} as unknown as ReturnType<Octokit['rest'][
 const mockFunction = jest.fn();
 
 describe('GithubLib', () => {
-  beforeAll(() => {
+  beforeEach(() => {
+    jest.resetAllMocks();
     jest.spyOn(Github.octokit.rest.checks, 'create').mockResolvedValue(mockChecksCreateReturnValue);
     jest.spyOn(Github.octokit.rest.checks, 'update').mockResolvedValue(mockChecksUpdateReturnValue);
   });

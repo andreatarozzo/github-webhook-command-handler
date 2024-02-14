@@ -3,7 +3,7 @@ import { spawnAsyncProcess } from '../../../src/utils/spawnProcess';
 import dotenv from 'dotenv';
 import { GitLib } from '../../../src/lib/github/git';
 import { Logger } from 'winston';
-dotenv.config({ path: '.env.test' });
+dotenv.config({ path: '.env.test.local' });
 
 jest.mock('../../../src/utils/spawnProcess', () => ({
   spawnAsyncProcess: jest.fn(),
