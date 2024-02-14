@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import { loggingMiddleware } from './middleware';
 import { createNodeMiddleware } from '@octokit/webhooks';
-import { GitLib, GithubLib } from './lib/github';
+import { initGitAndGithub } from './lib/github';
 import { prCommandHandler } from './lib/github';
 import { App } from '@octokit/app';
 import { logger, spawnAsyncProcess } from './utils';
@@ -28,14 +28,20 @@ const GithubApp = new App({
     secret: process.env.GH_APP_WEBHOOK_SECRET!,
   },
 });
-const Github = new GithubLib(GithubApp, logger);
-const Git = new GitLib(GithubApp, spawnAsyncProcess, logger);
 
 // Webhook event registration
 GithubApp.webhooks.on('issue_comment.created', async ({ payload }) => {
-  // Github init initialize the auth for octokit
-  // Git init initialize the git user info & credentials
-  prCommandHandler(payload, await Github.init(), await Git.init());
+  try {
+    const { GithubInstance, GitInstance } = await initGitAndGithub(
+      GithubApp.octokit.auth,
+      process.env.GH_APP_INSTALLATION_ID!,
+      spawnAsyncProcess,
+      logger,
+    );
+    prCommandHandler(payload, GithubInstance, GitInstance);
+  } catch (e: any) {
+    logger.error(e);
+  }
 });
 
 // Setting Github webhooks middleware

@@ -44,13 +44,13 @@ export const updateCounterFileInterceptor: Interceptor = async (
     // This is necessary for maintaining the correct linking between CheckRuns and Commits.
     const branch = await github.getBranch({ ...context, branch: pr?.head.ref! });
 
-    await github.withinCheckRun(
-      {
+    await github.withinCheckRun({
+      options: {
         ...context,
         name: 'breaking-changes-interceptor',
         head_sha: branch?.commit.sha!,
       },
-      async (checkRunId: number) => {
+      fn: async (checkRunId: number) => {
         logger.info(`Update counter file interceptor - CHECK_RUN_ID: ${checkRunId}`);
 
         await git.clone({
@@ -97,6 +97,6 @@ export const updateCounterFileInterceptor: Interceptor = async (
           issue_number: event.issue.number,
         });
       },
-    );
+    });
   });
 };

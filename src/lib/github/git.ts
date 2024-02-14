@@ -2,16 +2,13 @@ import { App } from '@octokit/app';
 import { Logger } from 'winston';
 
 export class GitLib {
-  #app: App;
   #logger: Logger;
   #spawn: (command: string, options?: { stdoutOnError: boolean }) => Promise<string>;
 
   constructor(
-    githubApp: App,
     spawnAsyncProcess: (command: string, options?: { stdoutOnError: boolean }) => Promise<string>,
     logger: Logger,
   ) {
-    this.#app = githubApp;
     this.#logger = logger;
     this.#spawn = spawnAsyncProcess;
   }
@@ -20,12 +17,7 @@ export class GitLib {
    * Set the local Git credentials, username and email using the GitHub App auth token for the installation.
    * @returns Git instance
    */
-  async init(): Promise<GitLib> {
-    const { token } = (await this.#app.octokit.auth({
-      type: 'installation',
-      installationId: process.env.GH_APP_INSTALLATION_ID!,
-    })) as { token: string };
-
+  async initGitConfigAndCredentials(token: string): Promise<GitLib> {
     // Setting the Git credentials in the system
     // The cached credentials will last for 5mins, if the --timeout flag is omitted the default timeout is 15mins
     // This is necessary to be able to run commands like git clone, git commit ect ect

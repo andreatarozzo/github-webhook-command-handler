@@ -1,6 +1,6 @@
 import { IssueCommentEvent } from '@octokit/webhooks-types';
 import { CommentCommand, Interceptor, PrContext } from '../../../types';
-import { logger, opticBreakingChangesCheck, BreakingChangesError, withinTempDirectory } from '../../../utils';
+import { BreakingChangesError, logger, opticBreakingChangesCheck, withinTempDirectory } from '../../../utils';
 import { GithubLib } from '../github';
 import { join } from 'node:path';
 import { GitLib } from '../git';
@@ -35,13 +35,14 @@ export const breakingChangesInterceptor: Interceptor = async (
       pull_number: event.issue.number,
     });
 
-    await github.withinCheckRun(
-      {
+    await github.withinCheckRun({
+      options: {
         ...context,
         name: 'breaking-changes-interceptor',
         head_sha: pr.head.sha,
       },
-      async (checkRunId: number) => {
+      expectedError: BreakingChangesError,
+      fn: async (checkRunId: number) => {
         logger.info(`Breaking changes interceptor - CHECK_RUN_ID: ${checkRunId}`);
 
         try {
@@ -89,12 +90,14 @@ export const breakingChangesInterceptor: Interceptor = async (
               detailSectionBody: e.message,
               footer: 'You will need to address the issues stated above before being able to merge this PR!',
             });
-          } else {
-            // Any other exception will be tackle by the command handler
-            throw new Error(e.message);
+
+            // Re-throwing to make the checkRun fail
+            throw e;
           }
+
+          throw e;
         }
       },
-    );
+    });
   });
 };

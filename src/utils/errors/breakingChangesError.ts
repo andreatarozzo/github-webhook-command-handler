@@ -3,7 +3,7 @@ export class BreakingChangesError extends Error {
   message!: string;
 
   constructor(message: string) {
-    super();
+    super(message);
     this.message = message;
   }
 }
