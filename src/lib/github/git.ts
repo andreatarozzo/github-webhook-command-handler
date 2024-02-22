@@ -1,4 +1,3 @@
-import { App } from '@octokit/app';
 import { Logger } from 'winston';
 
 export class GitLib {
@@ -47,6 +46,8 @@ export class GitLib {
    * @param params
    */
   async commit(params: { commitMessage: string; workDirectory: string }) {
+    // If the commit message is dynamically generated through user inputs, some sanitization of the input must be implemented
+    // to prevent the execution of untrusted commands.
     const command = `cd ${params.workDirectory} && git add . && git commit -m "${params.commitMessage}"`;
     this.#logger.info(`Running git command: ${command}`);
     await this.#spawn(command);
@@ -57,6 +58,8 @@ export class GitLib {
    * @param params
    */
   async push(params: { ref: string; workDirectory: string }) {
+    // If the commit message is dynamically generated through user inputs, some sanitization of the input must be implemented
+    // to prevent the execution of untrusted commands.
     const command = `cd ${params.workDirectory} && git push origin ${params.ref}`;
     this.#logger.info(`Running git command: ${command}`);
     await this.#spawn(command);

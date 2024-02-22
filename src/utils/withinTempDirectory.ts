@@ -10,6 +10,9 @@ import { join, sep } from 'node:path';
 export const withinTempDirectory = async (prefix: string, fn: (path: string) => Promise<void> | void) => {
   let tempDirPath!: string;
   try {
+    // This specific setup is relatively safe considering that the prefix is something that is hardcoded at the moment.
+    // In case the prefix is passed dynamically using payload events data or some kind of user input, it is highly
+    // recommended to sanitize the prefix to avoid path traversal attacks
     tempDirPath = await fs.mkdtemp(`${prefix}-`);
     await fn(tempDirPath);
   } catch (e: any) {
